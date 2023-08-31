@@ -22,20 +22,17 @@ public class Character extends Pane {
     private int y;
     private KeyCode leftKey;
     private KeyCode rightKey;
-    boolean isMoveLeft= false;
-    boolean isMoveRight = false;
-    boolean isFalling = true;
-
-    private KeyCode upKey;
-    int yVelocity =0;
+     private KeyCode upKey;
+    int yVelocity = 0;
     int xVelocity = 0;
     int xAccelearation = 1;
     int yAccelearation = 1;
     int xMaxVelocity = 7;
     int yMaxVelocity = 17;
-
-
-    boolean canJump = false;
+    boolean isMoveLeft= false;
+    boolean isMoveRight = false;
+    boolean isFalling = true;
+     boolean canJump = false;
     boolean isJumping = false;
    // int highestJump = 100;
     public Character (int x, int y, int offsetX, int offsetY, KeyCode leftKey, KeyCode rightKey, KeyCode upKey){
@@ -55,6 +52,138 @@ public class Character extends Pane {
         this.getChildren().addAll(this.imageView);
     }
 
+
+
+public void moveY(){
+    setTranslateY(y);
+    if(isFalling){
+        yVelocity = yVelocity >= yMaxVelocity ? yMaxVelocity : yVelocity + yAccelearation;
+        y = y+ yVelocity;
+    } else if (isJumping) {
+        yVelocity = yVelocity <= 0 ? 0 : yVelocity - yAccelearation;
+        y =y - yVelocity;
+    }
+}
+    public void moveX(){
+     setTranslateX(x);
+    if(isMoveLeft) {
+        xVelocity = xVelocity >= xMaxVelocity ? xMaxVelocity : xVelocity + xAccelearation;
+        x = x - xVelocity;
+    }
+    if (isMoveRight) {
+        xVelocity = xVelocity>= xMaxVelocity ? xMaxVelocity : xVelocity + xAccelearation;
+        x = x + xVelocity;}
+    }
+public void moveLeft(){
+   // x=x-xVelocity;
+    isMoveLeft = true;
+    isMoveRight = false;
+}
+    public void moveRight(){
+       // x=x+xVelocity;
+        isMoveLeft = false;
+        isMoveRight = true;
+    }
+    public void stop(){
+        // xVelocity=0;
+        isMoveLeft = false;
+        isMoveRight = false;
+    }
+    public void repaint(){
+        moveX();
+        moveY();
+    }
+    public void checkReachFloor(){
+        if(isFalling && y >= Platform.GROUND - CHARACTER_HEIGHT){
+        isFalling = false;
+        canJump = true;
+        yVelocity=0;
+    }
+}
+
+ public void checkReachGameWall(){
+    if(x <= 0){
+        x = 0;
+    } else if(x+getWidth() >= Platform.WIDTH){
+        x= Platform.WIDTH -(int) getWidth();
+    }
+}
+    public void checkReachHighest(){
+        if(isJumping && yVelocity <=0)
+            isJumping=false;
+            isFalling=true;
+            yVelocity=0;
+
+        }
+    public void jump() {
+        if (canJump) {
+            yVelocity = yMaxVelocity;
+            canJump = false;
+            isJumping = true;
+            isFalling = false;
+
+
+        }
+    }
+    public void trace(){
+  //  System.out.println(String.format("x:%d y:%d vx:%d",x,y,xVelocity,yVelocity));
+        logger.info("x:{} y:{} vx:{} vy:{}",x,y,xVelocity,yVelocity);
+
+    }
+    public KeyCode getUpKey() {
+        return upKey;
+    }
+
+    public void setUpKey(KeyCode upKey) {
+        this.upKey = upKey;
+    }
+    public KeyCode getLeftKey() {
+        return leftKey;
+    }
+
+    public void setLeftKey(KeyCode leftKey) {
+        this.leftKey = leftKey;
+    }
+
+    public KeyCode getRightKey() {
+        return rightKey;
+    }
+
+    public void setRightKey(KeyCode rightKey) {
+        this.rightKey = rightKey;
+    }
+
+    public int getxAccelearation() {
+        return xAccelearation;
+    }
+
+    public void setxAccelearation(int xAccelearation) {
+        this.xAccelearation = xAccelearation;
+    }
+
+    public int getyAccelearation() {
+        return yAccelearation;
+    }
+
+    public void setyAccelearation(int yAccelearation) {
+        this.yAccelearation = yAccelearation;
+    }
+
+    public int getxMaxVelocity() {
+        return xMaxVelocity;
+    }
+
+    public void setxMaxVelocity(int xMaxVelocity) {
+        this.xMaxVelocity = xMaxVelocity;
+    }
+
+    public int getyMaxVelocity() {
+        return yMaxVelocity;
+    }
+
+    public void setyMaxVelocity(int yMaxVelocity) {
+        this.yMaxVelocity = yMaxVelocity;
+    }
 
 
     public Image getCharacterImg() {
@@ -146,139 +275,6 @@ public class Character extends Pane {
     }
 
 
-
-
-    public KeyCode getUpKey() {
-        return upKey;
-    }
-
-    public void setUpKey(KeyCode upKey) {
-        this.upKey = upKey;
-    }
-    public KeyCode getLeftKey() {
-        return leftKey;
-    }
-
-    public void setLeftKey(KeyCode leftKey) {
-        this.leftKey = leftKey;
-    }
-
-    public KeyCode getRightKey() {
-        return rightKey;
-    }
-
-    public void setRightKey(KeyCode rightKey) {
-        this.rightKey = rightKey;
-    }
-public void moveY(){
-    setTranslateY(y);
-    if(isFalling){
-        yVelocity = yVelocity>= yMaxVelocity ? yMaxVelocity : yVelocity + yAccelearation;
-        y=y+yVelocity;
-    } else if (isJumping) {
-        yVelocity = yVelocity>= 0? 0 : yVelocity - yAccelearation;
-        y=y-yVelocity;
-    }
-}
-    public void moveX(){
-    setTranslateX(x);
-    if(isMoveLeft) {
-        xVelocity = xVelocity>= xMaxVelocity ? xMaxVelocity : xVelocity + xAccelearation;
-        x = x-xVelocity;
-    }
-    if (isMoveRight) {
-        xVelocity = xVelocity>= xMaxVelocity ? xMaxVelocity : xVelocity + xAccelearation;
-        x = x+ xVelocity;}
-    }
-public void moveLeft(){
-   // x=x-xVelocity;
-    isMoveLeft = true;
-    isMoveRight = false;
-}
-    public void moveRight(){
-       // x=x+xVelocity;
-        isMoveLeft = false;
-        isMoveRight = true;
-    }
-    public void stop(){
-        // xVelocity=0;
-        isMoveLeft = false;
-        isMoveRight = false;
-    }
-public void checkReachFloor(){
-    if(isFalling && y>= Platform.GROUND - CHARACTER_HEIGHT){
-        isFalling = false;
-        canJump = true;
-        yVelocity=0;
-    }
-}
-
-public void repaint(){
-    setTranslateY(y);
-    setTranslateX(x);
-    moveX();
-    moveY();
-}
-public void checkReachGameWall(){
-    if(x<=0){
-        x=0;
-    } else if(x+getWidth() >= Platform.WIDTH){
-        x= Platform.WIDTH-(int) getWidth();
-    }
-}
- public void jump() {
-     if (canJump) {
-         yVelocity = yMaxVelocity;
-         canJump = false;
-         isJumping = true;
-         isFalling = false;
-
-
-     }
- }
-    public void checkReachHighest(){
-        if(isJumping && yVelocity <=0)
-            isJumping=false;
-            isFalling=true;
-            yVelocity=0;
-
-        }
-    public void trace(){
-  //  System.out.println(String.format("x:%d y:%d vx:%d",x,y,xVelocity,yVelocity));
-        logger.info("x:{} y:{} vx:{} vy:{}",x,y,xVelocity,yVelocity);
-    }
-
-    public int getxAccelearation() {
-        return xAccelearation;
-    }
-
-    public void setxAccelearation(int xAccelearation) {
-        this.xAccelearation = xAccelearation;
-    }
-
-    public int getyAccelearation() {
-        return yAccelearation;
-    }
-
-    public void setyAccelearation(int yAccelearation) {
-        this.yAccelearation = yAccelearation;
-    }
-
-    public int getxMaxVelocity() {
-        return xMaxVelocity;
-    }
-
-    public void setxMaxVelocity(int xMaxVelocity) {
-        this.xMaxVelocity = xMaxVelocity;
-    }
-
-    public int getyMaxVelocity() {
-        return yMaxVelocity;
-    }
-
-    public void setyMaxVelocity(int yMaxVelocity) {
-        this.yMaxVelocity = yMaxVelocity;
-    }
 }
 
 

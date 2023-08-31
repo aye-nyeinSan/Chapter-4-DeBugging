@@ -13,7 +13,7 @@ public class DrawingLoop implements Runnable{
     public DrawingLoop(Platform platform){
         this.platform = platform;
         frameRate = 30;
-        interval =1000.0f/frameRate; // 1000 ms=1 second
+        interval =1000.0f /frameRate; // 1000 ms=1 second
         running = true;
     }
     private void checkDrawCollisions(Character character){
@@ -39,15 +39,10 @@ public class DrawingLoop implements Runnable{
                         e.printStackTrace();
                     }
 
-            } else {
-                try {
-                    Thread.sleep((long) (interval - (interval % time)));
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+            }
 
             }
         }
 
     }
-}
+

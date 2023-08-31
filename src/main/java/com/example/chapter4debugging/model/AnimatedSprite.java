@@ -22,13 +22,13 @@ public class AnimatedSprite extends ImageView {
         public void tick(){
                 curColumnIndex = curIndex % columns;
                 curRowIndex =curIndex/columns;
-                curIndex =(curIndex+1)% (columns*rows);
+                curIndex =( curIndex +1 ) % (columns*rows);
                 interpolate();
         }
 
         private void interpolate() {
-                final int x = curColumnIndex* width + offsetX;
-                final int y = curColumnIndex* height + offsetY;
+                final int x = curColumnIndex * width + offsetX;
+                final int y = curColumnIndex * height + offsetY;
                 this.setViewport(new Rectangle2D(x,y,width,height));
         }
 

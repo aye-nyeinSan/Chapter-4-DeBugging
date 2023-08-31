@@ -12,7 +12,7 @@ public class GameLoop  implements  Runnable{
     private boolean running;
     public GameLoop(Platform platform){
         this.platform=platform;
-        frameRate = 60;
+        frameRate = 10;
         interval = 1000.0f/frameRate;
         running = true;;
     }
@@ -27,14 +27,14 @@ public class GameLoop  implements  Runnable{
           character.moveRight();
           platform.getCharacter().trace();
       }
-      if(!platform.getKeys().isPressed(character.getLeftKey()) && !platform.getKeys().isPressed(character.getRightKey())){
+      if(!platform.getKeys().isPressed(character.getLeftKey())
+              && !platform.getKeys().isPressed(character.getRightKey())){
           character.stop();
       }
-//      if(platform.getKeys().isPressed(character.getLeftKey()) && platform.getKeys().isPressed(character.getRightKey())){
-//          character.stop();
-//      }
+
       if(platform.getKeys().isPressed(character.getUpKey())){
           character.jump();
+          platform.getCharacter().trace();
       }
       if(platform.getKeys().isPressed(character.getLeftKey()) ||
               platform.getKeys().isPressed((character.getRightKey()))){
@@ -42,24 +42,16 @@ public class GameLoop  implements  Runnable{
       }
 
 
-   // character.moveY();
+
 
   }
-//  public void checkCollisions(Character character){
-//        character.checkReachGameWall();
-//        character.checkReachFloor();
-//        character.checkReachHighest();
-//  }
-//  public void paint (Character character){
-//    character.repaint();
-//  }
+
     @Override
     public void run() {
         while(running){
             float time = System.currentTimeMillis();
             update(platform.getCharacter());
-//            checkCollisions(platform.getCharacter());
-//            paint(platform.getCharacter());
+
             time = System.currentTimeMillis()- time;
             if(time <interval){
                 try{
