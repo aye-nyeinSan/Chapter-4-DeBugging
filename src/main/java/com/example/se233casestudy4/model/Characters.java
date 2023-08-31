@@ -52,7 +52,20 @@ public class Characters extends Pane {
             x = Platform.WIDTH - (int)getWidth();
         }
     }
-
+    public void checkReachHighest() {
+        if(isJumping && yVelocity <= 0) {
+            isJumping = false;
+            isFalling = true;
+            yVelocity = 0;
+        }
+    }
+    public void checkReachFloor() {
+        if (isFalling && y >= Platform.GROUND - CHARACTER_HEIGHT) {
+            isFalling = false;
+            canJump = true;
+            yVelocity = 0;
+        }
+    }
     public void jump() {
         if(canJump) {
             yVelocity = yMaxVelocity;
@@ -61,44 +74,12 @@ public class Characters extends Pane {
             isFalling = false;
         }
     }
-    public void checkReachHighest() {
-        if(isJumping && yVelocity <= 0) {
-            isJumping = false;
-            isFalling = true;
-            yVelocity = 0;
-        }
-    }
 
-    public KeyCode getLeftKey() {
-        return leftKey;
-    }
 
-    public AnimatedSprite getImageView() {
-        return imageView;
-    }
-
-    public void setImageView(AnimatedSprite imageView) {
-        this.imageView = imageView;
-    }
-
-    public void setLeftKey(KeyCode leftKey) {
-        this.leftKey = leftKey;
-    }
      public void trace() {
         logger.info("x:{} y:{} vx:{} vy:{}",x,y,xVelocity,yVelocity);
  }
 
-    public KeyCode getRightKey() {
-        return rightKey;
-    }
-
-    public KeyCode getUpKey() {
-        return upKey;
-    }
-
-    public void setUpKey(KeyCode upKey) {
-        this.upKey = upKey;
-    }
 
     public void moveY() {
         setTranslateY(y);
@@ -110,13 +91,7 @@ public class Characters extends Pane {
             y = y - yVelocity;
         }
     }
-    public void checkReachFloor() {
-        if (isFalling && y >= Platform.GROUND - CHARACTER_HEIGHT) {
-            isFalling = false;
-            canJump = true;
-            yVelocity = 0;
-        }
-    }
+
     public void repaint() {
         moveX();
         moveY();
@@ -126,13 +101,6 @@ public class Characters extends Pane {
         isMoveRight = false;
     }
 
-    public Image getCharacterImg() {
-        return characterImg;
-    }
-
-    public void setCharacterImg(Image characterImg) {
-        this.characterImg = characterImg;
-    }
 
     public void moveRight() {
         isMoveLeft = false;
@@ -154,4 +122,37 @@ public class Characters extends Pane {
         }
 
     }
+    public KeyCode getLeftKey() {
+        return leftKey;
+    }
+
+    public AnimatedSprite getImageView() {
+        return imageView;
+    }
+    public KeyCode getRightKey() {
+        return rightKey;
+    }
+
+    public KeyCode getUpKey() {
+        return upKey;
+    }
+
+    public void setUpKey(KeyCode upKey) {
+        this.upKey = upKey;
+    }
+    public Image getCharacterImg() {
+        return characterImg;
+    }
+
+    public void setCharacterImg(Image characterImg) {
+        this.characterImg = characterImg;
+    }
+    public void setImageView(AnimatedSprite imageView) {
+        this.imageView = imageView;
+    }
+
+    public void setLeftKey(KeyCode leftKey) {
+        this.leftKey = leftKey;
+    }
+
 }

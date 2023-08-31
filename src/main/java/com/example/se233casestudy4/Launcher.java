@@ -1,7 +1,7 @@
 package com.example.se233casestudy4;
 
 import com.example.se233casestudy4.controller.GameLoop;
-import com.example.se233casestudy4.model.DrawingLoop;
+import com.example.se233casestudy4.controller.DrawingLoop;
 import com.example.se233casestudy4.view.Platform;
 import javafx.application.Application;
 import javafx.scene.Scene;

@@ -1,5 +1,6 @@
-package com.example.se233casestudy4.model;
+package com.example.se233casestudy4.controller;
 
+import com.example.se233casestudy4.model.Characters;
 import com.example.se233casestudy4.view.Platform;
 
 public class DrawingLoop implements Runnable{
