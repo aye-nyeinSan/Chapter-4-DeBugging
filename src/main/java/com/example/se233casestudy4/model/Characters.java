@@ -31,12 +31,12 @@ public class Characters extends Pane {
     boolean isFalling = true;
     boolean canJump = false;
     boolean isJumping = false;
-    public Characters(int x, int y, int offsetX, int offsetY, KeyCode leftKey, KeyCode rightKey, KeyCode upKey) {
+    public Characters(int x, int y, Image characterImg, int offsetX, int offsetY, KeyCode leftKey, KeyCode rightKey, KeyCode upKey) {
         this.x = x;
         this.y = y;
         this.setTranslateX(x);
         this.setTranslateY(y);
-        this.characterImg = new Image(Launcher.class.getResourceAsStream("assets/MarioSheet.png"));
+        this.characterImg = characterImg;
         this.imageView = new AnimatedSprite(characterImg, 4,4,1,offsetX,offsetY,16, 32);
         this.imageView.setFitWidth(CHARACTER_WIDTH);
         this.imageView.setFitHeight(CHARACTER_HEIGHT);

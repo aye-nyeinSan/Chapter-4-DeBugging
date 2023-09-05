@@ -13,6 +13,7 @@ public class Platform extends Pane {
     public static final int HEIGHT = 400;
     public static final int GROUND = 300;
     private Characters character;
+    private Characters greenCharacter;
     private Image platformImg;
     private Keys keys;
     public Platform() {
@@ -21,13 +22,36 @@ public class Platform extends Pane {
         ImageView backgroundImg = new ImageView(platformImg);
         backgroundImg.setFitHeight(HEIGHT);
         backgroundImg.setFitWidth(WIDTH);
-        character = new Characters(30,30,0,0,KeyCode.A,KeyCode.D,KeyCode.W);
-        getChildren().addAll(backgroundImg,character);
+        character = new Characters(30,30, new Image(Launcher.class.getResourceAsStream("assets/MarioSheet.png")),0,0,KeyCode.A,KeyCode.D,KeyCode.W);
+       greenCharacter = new Characters(30,30,new Image(Launcher.class.getResourceAsStream("assets/MarioSheetGreen.png")),0,0,KeyCode.LEFT,KeyCode.RIGHT,KeyCode.UP);
+        getChildren().addAll(backgroundImg,character,greenCharacter);
     }
     public Characters getCharacter()
     {
         return character;
     }
+
+    public void setCharacter(Characters character) {
+        this.character = character;
+    }
+
+    public Characters getGreenCharacter() {
+        return greenCharacter;
+    }
+
+
+    public Image getPlatformImg() {
+        return platformImg;
+    }
+
+    public void setPlatformImg(Image platformImg) {
+        this.platformImg = platformImg;
+    }
+
+    public void setKeys(Keys keys) {
+        this.keys = keys;
+    }
+
     public Keys getKeys() {
         return keys;
     }

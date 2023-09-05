@@ -19,17 +19,20 @@ public class GameLoop implements Runnable {
             character.setScaleX(-1);
             character.moveLeft();
             platform.getCharacter().trace();
+            platform.getGreenCharacter().trace();
         }
         if (platform.getKeys().isPressed(character.getRightKey())) {
             character.setScaleX(1);
             character.moveRight();
-            platform.getCharacter().trace();
+            platform.getGreenCharacter().trace();
         }
         if (platform.getKeys().isPressed(character.getLeftKey()) || platform.getKeys().isPressed(character.getRightKey())) {
             character.getImageView().tick();
  }
         if (platform.getKeys().isPressed(character.getUpKey())) {
             character.jump();
+            platform.getCharacter().trace();
+            platform.getGreenCharacter().trace();
         }
         if (!platform.getKeys().isPressed(character.getLeftKey()) && !platform.getKeys().isPressed(character.getRightKey())) {
             character.stop();
@@ -42,6 +45,7 @@ public class GameLoop implements Runnable {
         while (running) {
             float time = System.currentTimeMillis();
             update(platform.getCharacter());
+            update(platform.getGreenCharacter());
             time = System.currentTimeMillis() - time;
             if (time < interval) {
                 try {

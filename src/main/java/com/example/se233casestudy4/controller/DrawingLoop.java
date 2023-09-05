@@ -22,12 +22,15 @@ public class DrawingLoop implements Runnable{
     private void paint(Characters character) {
         character.repaint();
     }
+
     @Override
     public void run() {
         while (running) {
             float time = System.currentTimeMillis();
             checkDrawCollisions(platform.getCharacter());
+            checkDrawCollisions(platform.getGreenCharacter());
             paint(platform.getCharacter());
+            paint(platform.getGreenCharacter());
             time = System.currentTimeMillis() - time;
             if(time < interval) {
                 try {
