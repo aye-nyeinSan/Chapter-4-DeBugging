@@ -22,7 +22,14 @@ public class Launcher extends Application {
         primaryStage.setTitle("platformer");
         primaryStage.setScene(scene);
         primaryStage.show();
-        (new Thread(gameLoop)).start();
-        (new Thread(drawingLoop)).start();
+        try{
+            (new Thread(gameLoop)).start();
+            (new Thread(drawingLoop)).start();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+
+
     }
 }

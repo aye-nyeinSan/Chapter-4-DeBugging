@@ -18,6 +18,7 @@ public class DrawingLoop implements Runnable{
         character.checkReachGameWall();
         character.checkReachHighest();
         character.checkReachFloor();
+
     }
     private void paint(Characters character) {
         character.repaint();
@@ -29,6 +30,7 @@ public class DrawingLoop implements Runnable{
             float time = System.currentTimeMillis();
             checkDrawCollisions(platform.getCharacter());
             checkDrawCollisions(platform.getGreenCharacter());
+
             paint(platform.getCharacter());
             paint(platform.getGreenCharacter());
             time = System.currentTimeMillis() - time;

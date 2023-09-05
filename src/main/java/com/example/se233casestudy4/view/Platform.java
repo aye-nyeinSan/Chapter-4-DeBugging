@@ -3,6 +3,7 @@ package com.example.se233casestudy4.view;
 import com.example.se233casestudy4.Launcher;
 import com.example.se233casestudy4.model.Characters;
 import com.example.se233casestudy4.model.Keys;
+import com.example.se233casestudy4.model.Name;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -22,8 +23,8 @@ public class Platform extends Pane {
         ImageView backgroundImg = new ImageView(platformImg);
         backgroundImg.setFitHeight(HEIGHT);
         backgroundImg.setFitWidth(WIDTH);
-        character = new Characters(30,30, new Image(Launcher.class.getResourceAsStream("assets/MarioSheet.png")),0,0,KeyCode.A,KeyCode.D,KeyCode.W);
-       greenCharacter = new Characters(30,30,new Image(Launcher.class.getResourceAsStream("assets/MarioSheetGreen.png")),0,0,KeyCode.LEFT,KeyCode.RIGHT,KeyCode.UP);
+        character = new Characters(30,30, new Image(Launcher.class.getResourceAsStream("assets/MarioSheet.png")), Name.Mario,0,0,KeyCode.A,KeyCode.D,KeyCode.W);
+       greenCharacter = new Characters(730,30,new Image(Launcher.class.getResourceAsStream("assets/MarioSheetGreen.png")),Name.MarioGreen,0,0,KeyCode.LEFT,KeyCode.RIGHT,KeyCode.UP);
         getChildren().addAll(backgroundImg,character,greenCharacter);
     }
     public Characters getCharacter()
