@@ -59,6 +59,19 @@ public class Characters extends Pane {
         this.type=type;
         this.getChildren().addAll(this.imageView);
     }
+
+    public Characters(int x, int y, int offsetX, int offsetY, KeyCode keyCode, KeyCode keyCode1, KeyCode keyCode2) {
+        this.x = x;
+        this.y = y;
+        this.setTranslateX(x);
+        this.setTranslateY(y);
+        this.offsetX = offsetX;
+        this.offsetY = offsetY;
+        this.leftKey = keyCode;
+        this.rightKey = keyCode1;
+        this.upKey = keyCode2;
+    }
+
     public void collided(Characters c){
         if(isMoveLeft){
             x = c.getX()+CHARACTER_WIDTH + 1;
@@ -249,4 +262,25 @@ public class Characters extends Pane {
     public int  getScore() {
         return score;
     }
+
+    public int getOffsetX() {
+        return offsetX;
+    }
+
+    public void setOffsetX(int offsetX) {
+        this.offsetX = offsetX;
+    }
+
+    public int getOffsetY() {
+        return offsetY;
+    }
+
+    public void setOffsetY(int offsetY) {
+        this.offsetY = offsetY;
+    }
+
+    public void setRightKey(KeyCode rightKey) {
+        this.rightKey = rightKey;
+    }
+
 }
