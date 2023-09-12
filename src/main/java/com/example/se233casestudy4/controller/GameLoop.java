@@ -3,6 +3,11 @@ package com.example.se233casestudy4.controller;
 import com.example.se233casestudy4.model.Characters;
 import com.example.se233casestudy4.model.Name;
 import com.example.se233casestudy4.view.Platform;
+import com.example.se233casestudy4.view.Score;
+import javafx.scene.control.Label;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class GameLoop implements Runnable {
     private Platform platform;
@@ -15,75 +20,53 @@ public class GameLoop implements Runnable {
         interval = 1000.0f / frameRate;
         running = true;
     }
-    private void update(Characters character) {
-
-//        if(character.getType().equals(Name.Mario) && platform.getKeys().isPressed(character.getLeftKey())){
-//            character.setScaleX(-1);
-//            character.moveLeft();
-//            platform.getCharacter().trace();
-//            character.checkCharacterCollision(platform.getGreenCharacter());
-//        }
-//        else if(character.getType().equals(Name.MarioGreen) && platform.getKeys().isPressed(character.getLeftKey())){
-//            character.setScaleX(-1);
-//            character.moveLeft();
-//            platform.getGreenCharacter().trace();
-//            character.checkCharacterCollision(platform.getCharacter());
-//        }
-//        if(character.getType().equals(Name.Mario) && platform.getKeys().isPressed(character.getRightKey())){
-//            character.setScaleX(1);
-//            character.moveRight();
-//            platform.getCharacter().trace();
-//            character.checkCharacterCollision(platform.getGreenCharacter());
-//        }
-//        else if(character.getType().equals(Name.MarioGreen) && platform.getKeys().isPressed(character.getRightKey())){
-//            character.setScaleX(1);
-//            character.moveRight();
-//            platform.getGreenCharacter().trace();
-//            character.checkCharacterCollision(platform.getCharacter());
-//        }
-
-        if (platform.getKeys().isPressed(character.getLeftKey())) {
-            character.setScaleX(-1);
-            character.moveLeft();
-            if(character.getType().equals(Name.Mario))
-            {    platform.getCharacter().trace();
-                character.checkCharacterCollision(platform.getGreenCharacter());}
-            else {  platform.getGreenCharacter().trace();
-                character.checkCharacterCollision(platform.getCharacter());}
-        }
-
-        if (platform.getKeys().isPressed(character.getRightKey())) {
-            character.setScaleX(1);
-            character.moveRight();
-            if(character.getType().equals(Name.Mario))
-            {character.checkCharacterCollision(platform.getGreenCharacter());
-                platform.getCharacter().trace();
+    private void updateScore(ArrayList<Score> scoreList, ArrayList<Characters> characterList) {
+        javafx.application.Platform.runLater(()->{
+            for (int i = 0; i < scoreList.size(); i++) {
+                scoreList.get(i).setPoint(characterList.get(i).getScore());
             }
-            else {character.checkCharacterCollision(platform.getCharacter());
-                platform.getGreenCharacter().trace();}
-        }
+        });
+    }
+    private void update(ArrayList<Characters> characterList) {
+
+        for (Characters character:characterList) {
+            if (platform.getKeys().isPressed(character.getLeftKey())) {
+                character.setScaleX(-1);
+                character.moveLeft();
+                character.checkCharacterCollision(character);
+                platform.getCharacterList().add(character);
+
+            }
+
+            if (platform.getKeys().isPressed(character.getRightKey())) {
+                character.setScaleX(1);
+                character.moveRight();
+                character.checkCharacterCollision(character);
+                    platform.getCharacterList().add(character);
+            }
             if (platform.getKeys().isPressed(character.getLeftKey()) || platform.getKeys().isPressed(character.getRightKey())) {
                 character.getImageView().tick();
             }
             if (platform.getKeys().isPressed(character.getUpKey())) {
                 character.jump();
-                platform.getCharacter().trace();
-                platform.getGreenCharacter().trace();
+                platform.getCharacterList().add(character);
+
             }
             if (!platform.getKeys().isPressed(character.getLeftKey()) && !platform.getKeys().isPressed(character.getRightKey())) {
                 character.stop();
             }
 
 
-
+        }
     }
 
     @Override
     public void run() {
         while (running) {
             float time = System.currentTimeMillis();
-           update(platform.getCharacter());
-            update(platform.getGreenCharacter());
+           update(platform.getCharacterList());
+           updateScore(platform.getScoreList(),platform.getCharacterList());
+
             time = System.currentTimeMillis() - time;
             if (time < interval) {
                 try {
@@ -101,3 +84,6 @@ public class GameLoop implements Runnable {
         }
     }
 }
+
+
+

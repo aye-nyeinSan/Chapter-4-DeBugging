@@ -1,13 +1,14 @@
 package com.example.se233casestudy4.model;
 
-import com.example.se233casestudy4.Launcher;
 import com.example.se233casestudy4.view.Platform;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.concurrent.TimeUnit;
 
 public class Characters extends Pane {
     private static final Logger logger = LogManager.getLogger(Characters.class);
@@ -18,8 +19,13 @@ public class Characters extends Pane {
     private Platform platform;
     private int x;
     private int y;
+    private int startX;
+    private int startY;
+    private int offsetX;
+    private int offsetY;
 
    private Name type;
+   private int score = 0;
     private KeyCode leftKey;
     private KeyCode rightKey;
     private KeyCode upKey;
@@ -39,6 +45,10 @@ public class Characters extends Pane {
         this.y = y;
         this.setTranslateX(x);
         this.setTranslateY(y);
+        this.offsetX = offsetX;
+        this.offsetY = offsetY;
+        this.startX=x;
+        this.startY=y;
         this.characterImg = characterImg;
         this.imageView = new AnimatedSprite(characterImg, 4,4,1,0,0,16, 32);
         this.imageView.setFitWidth(CHARACTER_WIDTH);
@@ -49,6 +59,50 @@ public class Characters extends Pane {
         this.type=type;
         this.getChildren().addAll(this.imageView);
     }
+    public void collided(Characters c){
+        if(isMoveLeft){
+            x = c.getX()+CHARACTER_WIDTH + 1;
+            stop();
+        } else if (isMoveRight) {
+            x = c.getX() - CHARACTER_WIDTH -1;
+            stop();
+        }
+        if( y < Platform.GROUND - CHARACTER_HEIGHT){
+            if( isFalling && y < c.getY() &&
+            Math.abs( y - c.getY()) <= CHARACTER_HEIGHT + 1 ){
+                score++;
+                y = Platform.GROUND - CHARACTER_HEIGHT - 5;
+                repaint();
+                c.collapsed();
+                c.respawn();
+            }
+        }
+    }
+
+    private void collapsed() {
+        imageView.setFitHeight(5);
+        y = Platform.GROUND -5 ;
+        repaint();
+        try{
+            TimeUnit.MILLISECONDS.sleep(500);
+
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void respawn() {
+        x = startX;
+        y = startY;
+        imageView.setFitWidth(CHARACTER_WIDTH);
+        imageView.setFitHeight(CHARACTER_HEIGHT);
+        isMoveLeft = false;
+        isMoveRight = false;
+        isFalling=true;
+        canJump = false;
+        isJumping = false;
+    }
+
     public void checkReachGameWall() {
         if (x <= 0) {
             x = 0;
@@ -174,5 +228,25 @@ public class Characters extends Pane {
 
     public void setType(Name type) {
         this.type = type;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getStartX() {
+        return startX;
+    }
+
+    public int getStartY() {
+        return startY;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int  getScore() {
+        return score;
     }
 }
