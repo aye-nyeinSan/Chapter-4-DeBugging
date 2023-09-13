@@ -50,8 +50,6 @@ public class DrawingLoop implements Runnable{
         while (running) {
             float time = System.currentTimeMillis();
             checkDrawCollisions(platform.getCharacterList());
-
-
             paint(platform.getCharacterList());
 
             time = System.currentTimeMillis() - time;
@@ -60,6 +58,13 @@ public class DrawingLoop implements Runnable{
                     Thread.sleep((long) (interval - time));
                 } catch (InterruptedException e) {
 
+                }
+
+            }else {
+                try{
+                    Thread.sleep((long) (interval - (interval % time)));
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
                 }
             }
         }

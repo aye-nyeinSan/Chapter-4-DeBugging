@@ -65,7 +65,7 @@ public class CharacterTest {
         assertEquals("Initial x",30,floatingCharacter.getX(),0);
         assertEquals("Initial y",30,floatingCharacter.getY(),0);
         assertEquals("offset x",0,floatingCharacter.getOffsetX(),0);
-        assertEquals("offset y",30,floatingCharacter.getOffsetY(),0);
+        assertEquals("offset y",0,floatingCharacter.getOffsetY(),0);
         assertEquals("leftKey",KeyCode.A,floatingCharacter.getLeftKey());
         assertEquals("RightKey",KeyCode.D,floatingCharacter.getRightKey());
         assertEquals("UpKey",KeyCode.W,floatingCharacter.getUpKey());

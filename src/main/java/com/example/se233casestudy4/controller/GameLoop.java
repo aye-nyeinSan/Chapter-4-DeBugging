@@ -8,17 +8,26 @@ import javafx.scene.control.Label;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+import static java.lang.reflect.Array.get;
+
 
 public class GameLoop implements Runnable {
     private Platform platform;
     private int frameRate;
     private float interval;
     private boolean running;
+
+
+
+
     public GameLoop(Platform platform) {
         this.platform = platform;
         frameRate = 10;
         interval = 1000.0f / frameRate;
         running = true;
+
     }
     private void updateScore(ArrayList<Score> scoreList, ArrayList<Characters> characterList) {
         javafx.application.Platform.runLater(()->{
@@ -27,38 +36,33 @@ public class GameLoop implements Runnable {
             }
         });
     }
+
     private void update(ArrayList<Characters> characterList) {
 
-        for (Characters character:characterList) {
+        for (Characters character : characterList ) {
             if (platform.getKeys().isPressed(character.getLeftKey())) {
                 character.setScaleX(-1);
                 character.moveLeft();
-                character.checkCharacterCollision(character);
-                platform.getCharacterList().add(character);
-
             }
-
             if (platform.getKeys().isPressed(character.getRightKey())) {
                 character.setScaleX(1);
                 character.moveRight();
-                character.checkCharacterCollision(character);
-                    platform.getCharacterList().add(character);
-            }
-            if (platform.getKeys().isPressed(character.getLeftKey()) || platform.getKeys().isPressed(character.getRightKey())) {
-                character.getImageView().tick();
-            }
-            if (platform.getKeys().isPressed(character.getUpKey())) {
-                character.jump();
-                platform.getCharacterList().add(character);
-
             }
             if (!platform.getKeys().isPressed(character.getLeftKey()) && !platform.getKeys().isPressed(character.getRightKey())) {
                 character.stop();
             }
-
-
+            if (platform.getKeys().isPressed(character.getLeftKey()) || platform.
+                    getKeys().isPressed(character.getRightKey())) {
+                character.getImageView().tick();
+            }
+            if (platform.getKeys().isPressed(character.getUpKey())) {
+                character.jump();
+            }
         }
     }
+
+
+
 
     @Override
     public void run() {
