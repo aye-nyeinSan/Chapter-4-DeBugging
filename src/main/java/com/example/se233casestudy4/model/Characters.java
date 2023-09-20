@@ -40,7 +40,7 @@ public class Characters extends Pane {
     boolean isFalling = true;
     boolean canJump = false;
     boolean isJumping = false;
-    public Characters(int x, int y, Image characterImg,Name type, int offsetX, int offsetY, KeyCode leftKey, KeyCode rightKey, KeyCode upKey) {
+    public Characters(int x, int y, Image characterImg, int offsetX, int offsetY, KeyCode leftKey, KeyCode rightKey, KeyCode upKey) {
         this.x = x;
         this.y = y;
         this.setTranslateX(x);
@@ -56,7 +56,7 @@ public class Characters extends Pane {
         this.leftKey = leftKey;
         this.rightKey = rightKey;
         this.upKey = upKey;
-        this.type=type;
+
         this.getChildren().addAll(this.imageView);
     }
 
@@ -73,6 +73,7 @@ public class Characters extends Pane {
     }
 
     public void collided(Characters c){
+
         if(isMoveLeft){
             x = c.getX()+CHARACTER_WIDTH + 1;
             stop();
@@ -137,14 +138,7 @@ public class Characters extends Pane {
             yVelocity = 0;
         }
     }
-    public void checkCharacterCollision(Characters green) {
-       if(this.getBoundsInParent().intersects(green.getBoundsInParent())) {
-           canJump=true;
-           this.jump();
-           this.moveRight();
-           canJump = false;
-       }
-    }
+
     public void jump() {
 
         if(canJump ) {
@@ -257,6 +251,10 @@ public class Characters extends Pane {
 
     public int getY() {
         return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 
     public int  getScore() {

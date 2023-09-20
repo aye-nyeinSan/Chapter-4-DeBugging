@@ -30,8 +30,8 @@ public class Platform extends Pane {
         backgroundImg.setFitHeight(HEIGHT);
         backgroundImg.setFitWidth(WIDTH);
 
-        characterList.add(new Characters(30,30, new Image(Launcher.class.getResourceAsStream("assets/MarioSheet.png")), Name.Mario,0,0,KeyCode.A,KeyCode.D,KeyCode.W));
-        characterList.add(new Characters(730,30,new Image(Launcher.class.getResourceAsStream("assets/MarioSheetGreen.png")),Name.MarioGreen,0,0,KeyCode.LEFT,KeyCode.RIGHT,KeyCode.UP));
+        characterList.add(new Characters(30,30, new Image(Launcher.class.getResourceAsStream("assets/MarioSheet.png")),0,0,KeyCode.A,KeyCode.D,KeyCode.W));
+        characterList.add(new Characters(730,30,new Image(Launcher.class.getResourceAsStream("assets/MarioSheetGreen.png")),0,0,KeyCode.LEFT,KeyCode.RIGHT,KeyCode.UP));
       scoreList.add(new Score(30,GROUND+30));
       scoreList.add(new Score(Platform.WIDTH-60,GROUND+30));
        getChildren().addAll(backgroundImg);
