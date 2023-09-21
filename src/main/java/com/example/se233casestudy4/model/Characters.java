@@ -241,6 +241,10 @@ public class Characters extends Pane {
         return x;
     }
 
+    public void setX(int x) {
+        this.x = x;
+    }
+
     public int getStartX() {
         return startX;
     }

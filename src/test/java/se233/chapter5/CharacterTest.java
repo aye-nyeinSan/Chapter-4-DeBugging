@@ -149,14 +149,19 @@ public class CharacterTest {
 
     }
     @Test
-    public void characterStopsRightAtBorderAfterMovingTowardsTheBorder() throws InvocationTargetException, IllegalAccessException, NoSuchFieldException {
+    public void characterStopsRightAtBorderAfterMovingTowardsTheBorder() throws InvocationTargetException, IllegalAccessException, NoSuchFieldException, NoSuchMethodException {
         Characters characterTest = characterListUnderTest.get(0);
         platformUnderTest.getKeys().add(KeyCode.D);
         updateMethod.invoke(gameLoopUnderTest,characterListUnderTest);
         redrawMethod.invoke(drawingLoopUnderTest,characterListUnderTest);
         Field isMovedRight = characterTest.getClass().getDeclaredField("isMoveRight" );
         isMovedRight.setAccessible(true);
-
+        Method checkReachGameWall= Characters.class.getDeclaredMethod("checkReachGameWall");
+        checkReachGameWall.setAccessible(true);
+        checkReachGameWall.invoke(characterTest);
+        characterTest.setX(800);
+        boolean testwall= characterTest.getX() >= Platform.WIDTH;
+        assertTrue("Controller: Character reach to the border",testwall);
 
         assertTrue("Controller : Right key pressing is acknowledged", platformUnderTest.getKeys().isPressed(KeyCode.D));
         assertTrue("Model : Character moving right is set", isMovedRight.getBoolean(characterTest));
